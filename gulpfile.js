@@ -47,8 +47,8 @@ env.config();
 /**
  * ROOTS
  */
-const srcroot = 'src';
-const dstroot = 'static';
+const srcroot = process.env.ASSETS_DIR;
+const dstroot = process.env.WEB_DIR;
 
 /**
  * CONFIG

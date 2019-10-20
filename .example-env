@@ -1,17 +1,13 @@
 ##
 # ENVIRONMENT VARIABLES
-##
+#
 
-##
 # APPLICATION
-##
 
 SECRET_KEY=""
 ENVIRONMENT="development"
-SITE_HANDLE="ptl"
+ASSETS_DIR="assets"
+WEB_DIR="static"
+SITE_HANDLE="prl"
 
-##
-# INTEGRATIONS
-#
-# Put sensitive integration items here (API keys etc)
-##
+# INTEGRATIONS - Put sensitive integration items here (API keys etc)
