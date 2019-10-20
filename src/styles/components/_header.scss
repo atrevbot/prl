@@ -1,0 +1,37 @@
+body > header {
+	display: flex;
+	justify-content: space-between;
+	position: fixed;
+	top: 0;
+	z-index: 1;
+	min-width: $page-min-width;
+	width: 100%;
+	padding: 0 $spacing-sm;
+	background-color: $color-bg-gray-dk;
+	border-bottom: 1px solid $color-br-gray-lt;
+
+	a {
+		line-height: $nav-height-md;
+
+		@media (min-width: $screen-sm-min) {
+			line-height: $nav-height-lg;
+		}
+	}
+
+	> nav {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		white-space: nowrap;
+		overflow-x: auto;
+
+		> a {
+			@include listMargin($spacing-sm, true);
+
+			@media (min-width: $screen-sm-min) {
+				height: $nav-height-lg;
+			}
+		}
+	}
+}

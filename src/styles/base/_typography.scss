@@ -1,0 +1,148 @@
+// https://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+@mixin fontSizeRem($size-value: 1.6) {
+    font-size: ($size-value * 10) + px;
+    font-size: $size-value + rem;
+}
+
+@mixin lineHeightRem($size-value: 1.6) {
+    line-height: ($size-value * 10) + px;
+    line-height: $size-value + rem;
+}
+
+@mixin tapTarget($size: "sm") {
+    display: inline-block;
+
+    @if ($size  ==  "sm") {
+        @include lineHeightRem(3.6);
+    } @else if ($size == "md") {
+        @include lineHeightRem(4.8);
+    }
+}
+
+@mixin bold($serif: false, $italic: false) {
+    font-weight: $font-weight-bd;
+
+    @if ($serif) {
+        @if ($italic) {
+            // font-family: $font-family-serif-bd-it;
+        } @else {
+            // font-family: $font-family-serif-bd;
+        }
+    } @else {
+        @if ($italic) {
+            // font-family: $font-family-sans-bd-it;
+        } @else {
+            // font-family: $font-family-sans-bd;
+        }
+    }
+}
+
+@mixin italic($serif: false, $weight: "md") {
+    font-style: italic;
+
+    @if ($serif) {
+        @if ($weight == "md") {
+            // font-family: $font-family-serif-md-it;
+        } @else if ($weight == "bd") {
+            // font-family: $font-family-serif-bd-it;
+        }
+    } @else {
+        @if ($weight == "lt") {
+            // font-family: $font-family-sans-lt-it;
+        } @else if ($weight == "md") {
+            // font-family: $font-family-sans-md-it;
+        } @else if ($weight == "bd") {
+            // font-family: $font-family-sans-bd-it;
+        }
+    }
+}
+
+@mixin emphasize($serif: false) {
+    > strong {
+        @include bold($serif);
+    }
+
+    > em {
+        @include italic($serif);
+    }
+
+    > strong > em,
+    > em > strong {
+        @include bold($serif, true);
+    }
+}
+
+@mixin font($size) {
+    font-family: $font-family-sans;
+    font-weight: $font-weight-md;
+
+    @if ($size == "heading-xl") {
+        @include fontSizeRem(4.8);
+        @include lineHeightRem(5.4);
+        @include bold;
+		font-family: $font-family-mono;
+    }
+
+    @if ($size == "heading-lg") {
+        @include fontSizeRem(3.2);
+        @include lineHeightRem(4.4);
+        @include bold;
+		font-family: $font-family-mono;
+    }
+
+    @if ($size == "heading-md") {
+        @include fontSizeRem(2.8);
+        @include lineHeightRem(3.6);
+        @include bold;
+		font-family: $font-family-mono;
+    }
+
+    @if ($size == "heading-sm") {
+        @include fontSizeRem(2.2);
+        @include lineHeightRem(3.4);
+        @include bold;
+		font-family: $font-family-mono;
+    }
+
+    @if ($size == "heading-xs") {
+        @include fontSizeRem(1.8);
+        @include lineHeightRem(2.2);
+        @include bold;
+		font-family: $font-family-mono;
+    }
+
+    @if ($size == "body-xl") {
+        @include fontSizeRem(3.0);
+        @include lineHeightRem(3.6);
+		font-family: $font-family-serif;
+    }
+
+    @if ($size == "body-lg") {
+        @include fontSizeRem(1.8);
+        @include lineHeightRem(2.6);
+		font-family: $font-family-serif;
+    }
+
+    @if ($size == "body-md") {
+        @include fontSizeRem(1.6);
+        @include lineHeightRem(2.6);
+    }
+
+    @if ($size == "body-sm") {
+        @include fontSizeRem(1.4);
+        @include lineHeightRem(2.4);
+        letter-spacing: 0.5px;
+    }
+
+    @if ($size == "body-xs") {
+        @include fontSizeRem(1.2);
+        @include lineHeightRem(1.8);
+    }
+
+    @if ($size == "link-md") {
+        @include fontSizeRem(1.2);
+        @include lineHeightRem(1.4);
+        @include bold;
+		font-family: $font-family-mono;
+    }
+}

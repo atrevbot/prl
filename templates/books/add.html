@@ -1,0 +1,39 @@
+{{ define "content" }}
+	<article>
+		<header class="heading">
+			<h1>Add a Book</h1>
+		</header>
+
+		{{ $bookFormID := uniqueID }}
+		<section id="{{ $bookFormID }}" class="form">
+			<form method="post" action="/books/add">
+				{{ .csrfField }}
+				<fieldset>
+					<label for="title">Title</label>
+					<input required id="title" type="text" name="title" />
+				</fieldset>
+				<fieldset>
+					<label for="author">Author</label>
+					<input required id="author" type="text" name="author" />
+				</fieldset>
+				<fieldset>
+					<label for="isbn">ISBN</label>
+					<input required id="isbn" type="text" name="isbn" />
+				</fieldset>
+				<fieldset>
+					<label for="description">Description</label>
+					<textarea id="description" name="description" maxlength="255"></textarea>
+				</fieldset>
+				<input type="submit" value="Add Book" />
+			</form>
+
+			<script>
+				window[{{ .env.SITE_HANDLE }}].components.push({
+					handle: "book-form",
+					id: "{{ $bookFormID }}",
+					searchIsbn: true,
+				});
+			</script>
+		</section>
+	</article>
+{{ end }}
