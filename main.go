@@ -4,11 +4,11 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/atrevbot/prl/app"
 	"github.com/boltdb/bolt"
 	"github.com/gorilla/csrf"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
-	"github.com/tplassman/ptstacks/library"
 )
 
 const DB_NAME = "data.db"
@@ -25,17 +25,17 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	bookRepo, err := library.NewBookRepo(db)
+	symptomRepo, err := app.NewSymptomRepo(db)
 	if err != nil {
 		panic(err)
 	}
-	eventRepo, err := library.NewEventRepo(db)
+	eventRepo, err := app.NewEventRepo(db)
 	if err != nil {
 		panic(err)
 	}
 
 	// Create server and attach routes
-	s := library.Server{bookRepo, eventRepo, mux.NewRouter(), env}
+	s := app.Server{symptomRepo, eventRepo, mux.NewRouter(), env}
 	s.Routes()
 
 	// Start server

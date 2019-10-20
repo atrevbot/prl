@@ -1,12 +1,12 @@
 {{ define "content" }}
 	<article>
 		<header class="heading">
-			<h1>Add a Book</h1>
+			<h1>Add a Symptom</h1>
 		</header>
 
-		{{ $bookFormID := uniqueID }}
-		<section id="{{ $bookFormID }}" class="form">
-			<form method="post" action="/books/add">
+		{{ $formID := uniqueID }}
+		<section id="{{ $formID }}" class="form">
+			<form method="post" action="/symptoms/add">
 				{{ .csrfField }}
 				<fieldset>
 					<label for="title">Title</label>
@@ -17,20 +17,16 @@
 					<input required id="author" type="text" name="author" />
 				</fieldset>
 				<fieldset>
-					<label for="isbn">ISBN</label>
-					<input required id="isbn" type="text" name="isbn" />
-				</fieldset>
-				<fieldset>
 					<label for="description">Description</label>
 					<textarea id="description" name="description" maxlength="255"></textarea>
 				</fieldset>
-				<input type="submit" value="Add Book" />
+				<input type="submit" value="Add Symptom" />
 			</form>
 
 			<script>
 				window[{{ .env.SITE_HANDLE }}].components.push({
-					handle: "book-form",
-					id: "{{ $bookFormID }}",
+					handle: "form",
+					id: "{{ $formID }}",
 					searchIsbn: true,
 				});
 			</script>

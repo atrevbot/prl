@@ -1,0 +1,26 @@
+{{ define "content" }}
+	<article>
+		<header class="heading">
+			<h1>Status of Symptoms</h1>
+		</header>
+		<section class="list">
+			<h2>Symptoms</h2>
+			{{ if not .symptomsOut }}
+				<p>No symptoms checked out</p>
+			{{ else }}
+				{{ range .symptomsOut }}
+					<article>
+						<h3>{{ .Title }}</h3>
+						<h5>{{ .Author }}</h5>
+						<p>{{ .Description }}</p>
+						<nav>
+							<a href="/symptoms/{{ .ID }}" title="View Symptom">
+								View Symptom
+							</a>
+						</nav>
+					</article>
+				{{ end }}
+			{{ end }}
+		</section>
+	</article>
+{{ end }}

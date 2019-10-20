@@ -1,0 +1,34 @@
+{{ define "content" }}
+	<article>
+		<header class="heading">
+			<h1>All Symptoms</h1>
+		</header>
+		<section class="list">
+			<nav>
+				<a href="/symptoms/add" title="Add a Symptom">Add a Symptom</a>
+			</nav>
+			{{ if not .symptoms }}
+				<p>No symptoms available</p>
+			{{ else }}
+				{{ $csrf := .csrfField }}
+				{{ range .symptoms }}
+					<article>
+						<h3>{{ .Title }} <small>({{ .ISBN }})</small></h3>
+						<h5><small>Written By:</small> {{ .Author }}</h5>
+						<p>{{ .Description }}</p>
+						<nav>
+							<a href="/symptoms/{{ .ID }}" title="View Symptom">
+								View Symptom
+							</a>
+							<form method="post" action="symptoms/remove">
+								{{ $csrf }}
+								<input type="hidden" name="id" value="{{ .ID }}" />
+								<input type="submit" value="Remove Symptom" />
+							</form>
+						</nav>
+					</article>
+				{{ end }}
+			{{ end }}
+		</section>
+	</article>
+{{ end }}

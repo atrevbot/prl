@@ -1,4 +1,4 @@
-package library
+package app
 
 import (
 	"bytes"
@@ -11,19 +11,15 @@ import (
 const EVENTS_BUCKET = "events"
 
 const (
-	EVENT_BOOK_ADDED       = "BOOK_ADDED"
-	EVENT_BOOK_REMOVED     = "BOOK_REMOVED"
-	EVENT_BOOK_CHECKED_IN  = "BOOK_CHECKED_IN"
-	EVENT_BOOK_CHECKED_OUT = "BOOK_CHECKED_OUT"
+	EVENT_SYMPTOM_ADDED   = "SYMPTOM_ADDED"
+	EVENT_SYMPTOM_REMOVED = "SYMPTOM_REMOVED"
 )
 
 type EventRepo interface {
 	All() ([]*event, error)
-	AllForBook(id int) ([]*event, error)
-	BookAdded(id int) error
-	BookRemoved(id int) error
-	BookCheckedIn(id int) error
-	BookCheckedOut(id int) error
+	AllForSymptom(id int) ([]*event, error)
+	SymptomAdded(id int) error
+	SymptomRemoved(id int) error
 }
 
 func NewEventRepo(db *bolt.DB) (EventRepo, error) {
@@ -42,21 +38,17 @@ func NewEventRepo(db *bolt.DB) (EventRepo, error) {
 }
 
 type event struct {
-	Time   time.Time
-	Type   string
-	BookID int
+	Time      time.Time
+	Type      string
+	SymptomID int
 }
 
 func (e *event) Title() string {
 	switch t := e.Type; t {
-	case EVENT_BOOK_ADDED:
-		return "Book added to library"
-	case EVENT_BOOK_REMOVED:
-		return "Book removed from library"
-	case EVENT_BOOK_CHECKED_IN:
-		return "Book checked in to library"
-	case EVENT_BOOK_CHECKED_OUT:
-		return "Book checked out of library"
+	case EVENT_SYMPTOM_ADDED:
+		return "Symptom added"
+	case EVENT_SYMPTOM_REMOVED:
+		return "Symptom removed"
 	default:
 		return "Unknown"
 	}
@@ -101,7 +93,7 @@ func (r eventStore) All() ([]*event, error) {
 	return es, nil
 }
 
-func (r eventStore) AllForBook(id int) ([]*event, error) {
+func (r eventStore) AllForSymptom(id int) ([]*event, error) {
 	var es []*event
 
 	err := r.db.View(func(tx *bolt.Tx) error {
@@ -113,7 +105,7 @@ func (r eventStore) AllForBook(id int) ([]*event, error) {
 				return err
 			}
 
-			if e.BookID != id {
+			if e.SymptomID != id {
 				continue
 			}
 
@@ -136,24 +128,18 @@ func (r eventStore) AllForBook(id int) ([]*event, error) {
 	return es, nil
 }
 
-func (r eventStore) BookAdded(id int) error {
-	return writeEvent(r.db, id, EVENT_BOOK_ADDED)
+func (r eventStore) SymptomAdded(id int) error {
+	return writeEvent(r.db, id, EVENT_SYMPTOM_ADDED)
 }
-func (r eventStore) BookRemoved(id int) error {
-	return writeEvent(r.db, id, EVENT_BOOK_REMOVED)
-}
-func (r eventStore) BookCheckedIn(id int) error {
-	return writeEvent(r.db, id, EVENT_BOOK_CHECKED_IN)
-}
-func (r eventStore) BookCheckedOut(id int) error {
-	return writeEvent(r.db, id, EVENT_BOOK_CHECKED_OUT)
+func (r eventStore) SymptomRemoved(id int) error {
+	return writeEvent(r.db, id, EVENT_SYMPTOM_REMOVED)
 }
 
-func writeEvent(db *bolt.DB, bookId int, eventType string) error {
+func writeEvent(db *bolt.DB, symptomId int, eventType string) error {
 	return db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(EVENTS_BUCKET))
 		t := time.Now()
-		e := &event{t, eventType, bookId}
+		e := &event{t, eventType, symptomId}
 
 		// Marshal event data into bytes.
 		buf, err := json.Marshal(e)
