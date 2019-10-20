@@ -1,91 +1,56 @@
-# Psychology Today Library Application
+# Project Rare Life - MVP Specification
 
-CRUD app for books in a library. Funcitonality included:
+## Pages
 
-1. Adding new books to the stacks
-	* Title, Author, ISBN, Description
-2. Editing existing books
-3. Removing books from the stacks
-4. Checking books in and out
-	* Bookes that are checked our cannot be edited
+1. Home
+Mission statement and entry point to form
 
-## Installation
+2. Survey
+Add blocks for describing symptoms
 
-### Requirements
+3. Account profile page to view history form intake form
+Add new symptoms or diagnoses and close out or modify previous info
 
-* [Go](https://golang.org/dl/) v1.11 or higher
-* [NodeJS](https://nodejs.org/en/) v8.16.0 or higher (development only)
-* [npm](https://www.npmjs.com/get-npm) v6.4.1 or higher (development only)
+### Survey
 
-### Server Build Process
+#### Account fields
 
-1. Copy `.example-env` to `.env`.
+- Email
+- Generate fun / unique username
 
-    ```
-    $ cp .env-example .env
-    ```
+#### User flow
 
-2. Add 32 byte long key to .env file for CSRF tokens.
+1. Add symptoms
+	a. Add treatment for symptom
+	b. Add change in symptom
 
-3. Build or run `main.go`.
+#### Symptom fields
 
-    ```
-    $ go build main.go
-    $ ./main
-    ```
+- Symptom name: Enum
+- Age of appearance
+	- Years: Int
+	- Months: Int
+- Symptom severity: Int
 
-    or
+#### Symptom categories
 
-    ```
-    $ go run main.go
-    ```
+- Medical (e.g. microcephely)
+- Behavioral (e.g. hand flapping)
 
-4. Visit `localhost:8080` in web browser.
+#### Treatment fields
 
-### Assets Builld Process (development only)
+- Treatment name: Enum
+- Age of application
+	- Years: Int
+	- Months: Int
 
-Styles and scripts are built from `assets` directory into `static` directory.
+## Structure
 
-1. Install front end dependencies.
+Event sources architecture to allow users to submit events around symptoms
 
-    ```
-    $ npm install
-    ```
+### Events
 
-2. Build or watch assets.
-
-    ```
-    $ gulp build
-    ```
-
-    or
-
-    ```
-    $ gulp watch
-    ```
-
-## Features
-
-* Add new book consisting of title, author, ISBN, and description.
-* View all books in the library
-* View log of all events on a book
-* Edit details of existing book
-    * Books that are checked out cannot be edited until they are checked by in
-* Remove a book from being available in the library
-* Check book out of library
-* Check book in to library
-* View status of all books check in to and out of library
-* Logs all actions taken inside of the library application to an event store
-
-## Improvements
-
-The project CRUD interface for managin books in a library, and an event store for tracking actions taking in the system.
-
-* Read book(s) state from reduction of event store rather than mutating book information in the database.
-* Add server side validation of book fields when adding book
-* Add pagination and sorting functionality to allow sorting by book by attributes (e.g. title, author, etc.).
-* Auto suggest known ISBN's when typing in corresponding field and dynamically populate book details based on [ISB API](http://www.isbndb.com/").
-* Add more content to books (e.g. cover image, publish date, etc.)
-* As more routes are added to the application, the templating logic could be abstracted into a dedicated package that would also parse an option `templates/_components` directory to allow for nesting reusable component partials into route pages.
-* Add a `templates/_components` directory to encapsulate component markup.
-* Add a `scripts/components` directory encapselate component scripts in a single class.
+- Symtpom noted
+- Symptom improved
+- Symptom worsed
+- Symptom resolved
