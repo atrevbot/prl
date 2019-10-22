@@ -22,6 +22,7 @@ Add new symptoms or diagnoses and close out or modify previous info
 
 1. Add symptoms
 	a. Add treatment for symptom
+        - Outcomes of treatment?
 	b. Add change in symptom
 
 #### Symptom fields
