@@ -55,3 +55,7 @@ Event sources architecture to allow users to submit events around symptoms
 - Symptom improved
 - Symptom worsed
 - Symptom resolved
+
+## Symptom list
+
+(list)[https://docs.google.com/spreadsheets/d/1yNqStSgqMzrc6iynj_SSOaZtziTcFq-eFoSBX9SEGPw/edit?ts=5d3f9fe2#gid=0]
